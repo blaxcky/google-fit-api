@@ -34,7 +34,18 @@
         </main>
     </div>
 
-    <script src="https://apis.google.com/js/api.js" onload="initializeGapi()" onerror="console.error('Google API failed to load')"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script>
+        window.onload = function() {
+            if (typeof gapi !== 'undefined') {
+                initializeGapi();
+            } else {
+                console.error('Google API failed to load');
+                document.getElementById('auth-btn').textContent = 'Google API Fehler';
+                document.getElementById('auth-btn').disabled = true;
+            }
+        };
+    </script>
     <script src="app.js"></script>
 </body>
 </html>

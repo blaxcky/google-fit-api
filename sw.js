@@ -1,10 +1,10 @@
 const CACHE_NAME = 'calorie-tracker-v1';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/app.js',
-  '/styles.css',
-  '/manifest.json',
+  './',
+  './index.html',
+  './app.js',
+  './styles.css',
+  './manifest.json',
   'https://apis.google.com/js/api.js'
 ];
 
