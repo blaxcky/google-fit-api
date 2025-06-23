@@ -8,17 +8,35 @@ let isSignedIn = false;
 
 // Initialize Google API
 function initializeGapi() {
+    console.log('Initializing Google API...');
+    console.log('CLIENT_ID:', CLIENT_ID);
+    
+    if (!gapi) {
+        console.error('GAPI not loaded');
+        showStatus('Google API nicht geladen', 'error');
+        return;
+    }
+    
     gapi.load('auth2', () => {
+        console.log('Auth2 library loaded');
         gapi.auth2.init({
             client_id: CLIENT_ID,
         }).then(() => {
+            console.log('Auth2 initialized successfully');
             const authInstance = gapi.auth2.getAuthInstance();
             isSignedIn = authInstance.isSignedIn.get();
+            console.log('Current sign-in status:', isSignedIn);
             updateUI();
             
             // Listen for sign-in state changes
             authInstance.isSignedIn.listen(updateUI);
+        }).catch((error) => {
+            console.error('Auth2 initialization failed:', error);
+            showStatus('Google Auth Fehler: ' + error.error, 'error');
         });
+    }, (error) => {
+        console.error('Failed to load auth2 library:', error);
+        showStatus('Auth2 Library Fehler', 'error');
     });
 }
 

@@ -37,12 +37,23 @@
     <script src="https://apis.google.com/js/api.js"></script>
     <script>
         window.onload = function() {
+            console.log('Window loaded, checking GAPI...');
+            console.log('typeof gapi:', typeof gapi);
+            
             if (typeof gapi !== 'undefined') {
+                console.log('GAPI found, initializing...');
                 initializeGapi();
             } else {
-                console.error('Google API failed to load');
+                console.error('Google API failed to load - gapi is undefined');
                 document.getElementById('auth-btn').textContent = 'Google API Fehler';
                 document.getElementById('auth-btn').disabled = true;
+                
+                // Show error in status
+                setTimeout(() => {
+                    if (typeof showStatus === 'function') {
+                        showStatus('Google API konnte nicht geladen werden', 'error');
+                    }
+                }, 100);
             }
         };
     </script>
