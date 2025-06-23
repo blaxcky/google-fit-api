@@ -136,14 +136,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Initialize Google API when page loads
-    initializeGapi();
+    // Initialize Google API when page loads (moved to HTML onload)
 });
 
 // Service Worker registration
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
+        navigator.serviceWorker.register('./sw.js')
             .then((registration) => {
                 console.log('SW registered: ', registration);
             })
