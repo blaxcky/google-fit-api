@@ -4,8 +4,7 @@ const urlsToCache = [
   './index.html',
   './app.js',
   './styles.css',
-  './manifest.json',
-  'https://apis.google.com/js/api.js'
+  './manifest.json'
 ];
 
 self.addEventListener('install', (event) => {
@@ -16,6 +15,12 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  // Don't cache Google API requests
+  if (event.request.url.includes('googleapis.com')) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+  
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
